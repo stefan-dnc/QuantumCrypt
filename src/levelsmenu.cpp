@@ -4,7 +4,7 @@
 #include "../include/player.hpp"
 #include "../include/levelsmenu.hpp"
 
-Menu::Menu(sf::RenderWindow &window) : window(window)
+LevelsMenu::LevelsMenu(sf::RenderWindow &window) : window(window)
 {
 
     // sf::Text text;
@@ -19,20 +19,20 @@ Menu::Menu(sf::RenderWindow &window) : window(window)
     // sf::Text textButton;
     textButton.setFont(font);
     textButton.setPosition(120, 210);
-    textButton.setString("Play");
+    textButton.setString("LEVEL 1");
     textButton.setCharacterSize(24);
     textButton.setFillColor(sf::Color::Black);
     textButton.setStyle(sf::Text::Bold);
 
     // myButton(sf::Vector2f(100, 200), sf::Vector2f(100, 50), sf::Color::White);
     myButton.setPosition(sf::Vector2f(100, 200));
-    myButton.setSize(sf::Vector2f(100, 50));
+    myButton.setSize(sf::Vector2f(140, 50));
     myButton.setColor(sf::Color::White);
 
     // sf::Text textButton2;
     textButton2.setFont(font);
     textButton2.setPosition(120, 310);
-    textButton2.setString("Options");
+    textButton2.setString("LEVEL 2");
     textButton2.setCharacterSize(24);
     textButton2.setFillColor(sf::Color::Black);
     textButton2.setStyle(sf::Text::Bold);
@@ -45,18 +45,18 @@ Menu::Menu(sf::RenderWindow &window) : window(window)
     // sf::Text textButton3;
     textButton3.setFont(font);
     textButton3.setPosition(120, 410);
-    textButton3.setString("Quit");
+    textButton3.setString("LEVEL 3");
     textButton3.setCharacterSize(24);
     textButton3.setFillColor(sf::Color::Black);
     textButton3.setStyle(sf::Text::Bold);
 
     // Button myButton3(sf::Vector2f(100, 400), sf::Vector2f(100, 50), sf::Color::White);
     myButton3.setPosition(sf::Vector2f(100, 400));
-    myButton3.setSize(sf::Vector2f(100, 50));
+    myButton3.setSize(sf::Vector2f(140, 50));
     myButton3.setColor(sf::Color::White);
 }
 
-void Menu::handleEvent(const sf::Event &event)
+void LevelsMenu::handleEvent(const sf::Event &event)
 {
     sf::Mouse mouse;
     if (event.type == sf::Event::MouseMoved)
@@ -95,9 +95,6 @@ void Menu::handleEvent(const sf::Event &event)
             mouse.getPosition(window).y >= 200 && mouse.getPosition(window).y <= 250)
         {
             std::cout << "Play" << std::endl;
-            // window.close();
-            LevelsMenu levelsmenu(window);
-            levelsmenu.draw();
         }
         if (mouse.getPosition(window).x >= 100 && mouse.getPosition(window).x <= 200 &&
             mouse.getPosition(window).y >= 300 && mouse.getPosition(window).y <= 350)
@@ -113,7 +110,7 @@ void Menu::handleEvent(const sf::Event &event)
     }
 }
 
-void Menu::draw()
+void LevelsMenu::draw()
 {
     while (window.isOpen())
     {

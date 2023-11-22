@@ -10,7 +10,7 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(QuantumCrypt src/main.cpp src/menu.cpp)
+add_executable(QuantumCrypt src/main.cpp src/menu.cpp src/levelsmenu.cpp)
 target_link_libraries(QuantumCrypt PRIVATE sfml-graphics)
 target_compile_features(QuantumCrypt PRIVATE cxx_std_17)
 

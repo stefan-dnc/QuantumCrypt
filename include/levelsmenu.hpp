@@ -4,10 +4,10 @@
 #include "SFML/Graphics.hpp"
 #include "../include/button.hpp"
 
-class Menu
+class LevelsMenu
 {
 public:
-    Menu(sf::RenderWindow &window);
+    LevelsMenu(sf::RenderWindow &window);
     void handleEvent(const sf::Event &event);
     void draw();
 
