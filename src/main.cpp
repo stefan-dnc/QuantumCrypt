@@ -1,26 +1,32 @@
-#include "../include/globals.hpp"
-#include "SFML/Graphics.hpp"
+// #include "../include/globals.hpp"
 #include "../include/player.hpp"
-#include "../include/menu.hpp"
+// #include "../include/menu.hpp"
 #include <iostream>
+#include <chrono>
+#include <thread>
 
-sf::Font font;
 Player player;
 
 int main()
 {
+    // player.showScore();
 
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Button Example");
-    window.setFramerateLimit(144);
+    constexpr int framesPerSecond = 60;
+    constexpr std::chrono::duration<double> frameDuration(1.0 / framesPerSecond);
 
-    if (!font.loadFromFile("/Users/stefan/Developer/QuantumCrypt/resources/PixelifySans.ttf"))
+    while (true)
     {
-        std::cerr << "Error loading font\n";
-        return 1;
-    }
-    player.showScore();
+        // Clear the screen escape sequence
+        std::cout << "\033[2J\033[H";
 
-    Menu menu(window);
-    menu.draw();
+        // Your rendering or refreshing logic goes here
+        std::cout << "Frame rendered at " << framesPerSecond << "fps" << std::endl;
+
+        // Sleep for the remaining time to achieve the desired frame rate
+        std::this_thread::sleep_for(frameDuration);
+    }
+
+    // Menu menu(window);
+    // menu.draw();
     return 0;
 }
