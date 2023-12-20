@@ -15,7 +15,11 @@ public:
     ~Menu(){};
 
     void draw();
+    void drawPlay();
     void drawStats();
+    void drawOptions();
+    void drawAbout();
+    void drawQuit();
 };
 
 void Menu::draw()
@@ -52,19 +56,19 @@ void Menu::draw()
     switch (stoi(this->userInput))
     {
     case 1:
-        // Play
+        this->drawPlay();
         break;
     case 2:
         this->drawStats();
         break;
     case 3:
-        // Options
+        this->drawOptions();
         break;
     case 4:
-        // About
+        this->drawAbout();
         break;
     case 5:
-        // Quit
+        this->drawQuit();
         break;
     }
 }
@@ -95,4 +99,92 @@ void Menu::drawStats()
     getline(std::cin, this->userInput);
 
     this->draw();
+}
+
+void Menu::drawPlay()
+{
+    system("clear");
+}
+
+void Menu::drawOptions()
+{
+    system("clear");
+    std::cout << R"(
+ _____       _   _                 
+|  _  |     | | (_)                
+| | | |_ __ | |_ _  ___  _ __  ___ 
+| | | | '_ \| __| |/ _ \| '_ \/ __|
+\ \_/ / |_) | |_| | (_) | | | \__ \
+ \___/| .__/ \__|_|\___/|_| |_|___/
+      | |                          
+      |_|                          
+      )" << '\n';
+
+    std::cout << "1. Change username    ?????" << '\n';
+    std::cout << "2. Reset stats        ?????" << '\n';
+    std::cout << "3. Return to main menu" << '\n';
+
+    std::cout << "'\n\n";
+
+    std::cout << "Enter your choice: ";
+
+    std::cin >> this->userInput;
+
+    while (this->userInput < "1" || this->userInput > "3")
+    {
+        std::cout << "Invalid input. Please try again: ";
+        std::cin >> this->userInput;
+    }
+
+    switch (stoi(this->userInput))
+    {
+    case 1:
+        // Change username
+        break;
+    case 2:
+        // Reset stats
+        break;
+    case 3:
+        this->draw();
+        break;
+    }
+}
+
+void Menu::drawAbout()
+{
+    system("clear");
+    std::cout << R"(
+  ___  _                 _   
+ / _ \| |               | |  
+/ /_\ \ |__   ___  _   _| |_ 
+|  _  | '_ \ / _ \| | | | __|
+| | | | |_) | (_) | |_| | |_ 
+\_| |_/_.__/ \___/ \__,_|\__|
+        )" << '\n';
+    std::cout << " ¬ Version: "
+              << "1.0.0" << '\n';
+    std::cout << " ¬ Author: "
+              << "Stefan Dinca" << '\n';
+    std::cout << " ¬ Github: "
+              << " https://github.com/stefan-dnc/QuantumCrypt" << '\n';
+    std::cout << " ¬ License: "
+              << "Open source" << '\n';
+    std::cout << " ¬ Description: "
+              << "A simple game of decrypting passwords." << '\n';
+    std::cout << " ¬ Dependencies: "
+              << "C++ 2b" << '\n';
+
+    std::cout << "\n\n";
+
+    std::cout << "Press enter to return to main menu. ";
+
+    std::cin.ignore();
+    getline(std::cin, this->userInput);
+
+    this->draw();
+}
+
+void Menu::drawQuit()
+{
+    system("clear");
 }
