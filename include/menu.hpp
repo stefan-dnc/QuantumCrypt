@@ -2,42 +2,25 @@
 
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 
 class Menu
 {
-protected:
+private:
     std::string userInput;
     // sf::RenderWindow &window;
 
 public:
     Menu(const std::string &input = "nope") : userInput(input) {}
-    virtual ~Menu(){};
+    ~Menu(){};
 
-    virtual void draw();
-    /*Menu(sf::RenderWindow &window);
-    void handleEvent(const sf::Event &event);
     void draw();
-
-    sf::Text text;
-    sf::Text textButton;
-    sf::Text textButton2;
-    sf::Text textButton3;
-    Button myButton;
-    Button myButton2;
-    Button myButton3;*/
-};
-
-class StatsMenu : public Menu
-{
-public:
-    StatsMenu() {}
-    virtual ~StatsMenu() {}
-
-    virtual void draw() override;
+    void drawStats();
 };
 
 void Menu::draw()
 {
+    system("clear");
     std::cout << R"(
  _____                   _                     _____                  _   
 |  _  |                 | |                   /  __ \                | |  
@@ -66,21 +49,13 @@ void Menu::draw()
         std::cin >> this->userInput;
     }
 
-    StatsMenu &statsMenu = dynamic_cast<StatsMenu &>(*this);
-
-    std::cout << " AICI 1\n";
     switch (stoi(this->userInput))
     {
     case 1:
         // Play
         break;
     case 2:
-        std::cout << " AICI 2\n";
-        // if (statsMenu)
-        //{
-        std::cout << " AICI 3\n";
-        statsMenu.draw();
-        //}
+        this->drawStats();
         break;
     case 3:
         // Options
@@ -94,8 +69,9 @@ void Menu::draw()
     }
 }
 
-void StatsMenu::draw()
+void Menu::drawStats()
 {
+    system("clear");
     std::cout << R"(
  _____ _        _       
 /  ___| |      | |      
@@ -115,13 +91,8 @@ void StatsMenu::draw()
 
     std::cout << "Press enter to return to main menu. ";
 
-    std::cin >> this->userInput;
+    std::cin.ignore();
+    getline(std::cin, this->userInput);
 
-    Menu menu;
-    Menu *baseMenu = dynamic_cast<Menu *>(this);
-    if (baseMenu)
-    {
-        // Call the draw function of the Menu base class
-        baseMenu->draw();
-    }
+    this->draw();
 }
