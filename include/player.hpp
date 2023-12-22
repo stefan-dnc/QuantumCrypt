@@ -4,6 +4,9 @@
 
 class Player
 {
+private:
+    int score = 0;
+
 public:
     Player(){};
 
@@ -15,7 +18,4 @@ public:
     {
         score++;
     };
-
-private:
-    int score = 0;
 };

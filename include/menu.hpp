@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include "game.hpp"
 
 class Menu
 {
@@ -104,6 +105,11 @@ void Menu::drawStats()
 void Menu::drawPlay()
 {
     system("clear");
+    Game *game = new Game();
+    system("clear");
+    delete game;
+
+    this->draw();
 }
 
 void Menu::drawOptions()

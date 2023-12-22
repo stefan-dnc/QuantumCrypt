@@ -1,12 +1,15 @@
 // #include "../include/globals.hpp"
 #include "../include/player.hpp"
 #include "../include/menu.hpp"
+#include "../include/timer.hpp"
+#include "../include/game.hpp"
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <stdlib.h>
 
 Player player;
+Globals globals;
 
 int main()
 {
@@ -18,12 +21,13 @@ int main()
 
     system("clear");
 
+    // mainmenu.draw();
+
     Menu *mainmenu = new Menu();
     mainmenu->draw();
 
     /*while (true)
     {
-        // Clear the screen escape sequence
         if (i % framesPerSecond != 0)
         {
             std::cout << "\033[" << (i / framesPerSecond) + 1 << ";1H";
@@ -32,11 +36,9 @@ int main()
         }
         // std::cout << "\033[2J\033[H";
 
-        // Your rendering or refreshing logic goes here
         std::cout << "Frame rendered at " << i << "fps" << '\n';
         i++;
 
-        // Sleep for the remaining time to achieve the desired frame rate
         std::this_thread::sleep_for(frameDuration);
     }*/
     /*std::cout << "abcdef";
