@@ -7,7 +7,6 @@
 #include <ncurses.h>
 #include <mutex>
 #include "globals.hpp"
-#include "player.hpp"
 #include "timer.hpp"
 #include "wordcrypt.hpp"
 
@@ -15,7 +14,7 @@ class Game
 {
 private:
     int gameScore = 0;
-    int defaultTime = 40;
+    int defaultTime = 10;
     std::string word;
     std::string cryptedWord;
     std::string decryptedWord;
@@ -36,6 +35,8 @@ private:
         system("clear");
 
         // std::cout << "\033[1;1H";
+
+        globals.addTimePlayed(defaultTime);
 
         if (gameScore > globals.getHighScore())
         {
@@ -126,6 +127,7 @@ private:
                         system("clear");
                         endGame();*/
                         increaseScore(cryptedWord.size());
+                        globals.increaseDecryptedWords();
                         cryptInstance.regenerateWord(word.size() + 1);
                         word = "";
 
@@ -237,8 +239,8 @@ public:
         else
         {
             system("clear");
-            this->start(defaultTime);
         }
+        this->start(defaultTime);
         // std::cout << "Game started" << '\n';
         // std::cout << "GAME CONSTRUCTOR" << '\n';
     };
@@ -296,6 +298,8 @@ public:
 
         output.join();
         input.join();
+
+        endGame();
 
         // std::cout << "\n\n\nthe final word is " << word << "with the length of " << word.length() << '\n';
         // std::cout << "FUNCTIA START" << '\n';

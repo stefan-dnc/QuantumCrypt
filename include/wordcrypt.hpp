@@ -12,18 +12,44 @@ protected:
 public:
     WordGen()
     {
-        std::random_device rd;
-        std::mt19937 mt(rd());
-        std::uniform_int_distribution<int> dist(1, 10);
-        this->wordLength = dist(mt);
-        this->word = "";
-        this->generate();
+        try
+        {
+            std::random_device rd;
+            std::mt19937 mt(rd());
+            std::uniform_int_distribution<int> dist(1, 10);
+            this->wordLength = dist(mt);
+
+            if (this->wordLength <= 0)
+            {
+                throw std::invalid_argument("Invalid word length.");
+            }
+
+            this->word = "";
+            this->generate();
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
     WordGen(int wordLength)
     {
-        this->wordLength = wordLength;
-        this->word = "";
-        this->generate();
+        try
+        {
+            this->wordLength = wordLength;
+
+            if (this->wordLength <= 0)
+            {
+                throw std::invalid_argument("Invalid word length.");
+            }
+
+            this->word = "";
+            this->generate();
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
 
     /*WordGen(std::string word)
@@ -59,12 +85,17 @@ public:
         this->wordLength = wordLength;
         this->word = "";
     }
+
+    virtual std::string getWordDifficulty() const
+    {
+        return "uncrypted";
+    }
 };
 class WordCrypt : public WordGen
 {
 private:
     std::string cryptedWord;
-    WordCrypt() : WordGen() // SINGLETON
+    WordCrypt() : WordGen()
     {
         cryptedWord = this->word;
         this->crypt();
@@ -142,5 +173,10 @@ public:
         this->generate();
         this->cryptedWord = this->word;
         this->crypt();
+    }
+
+    virtual std::string getWordDifficulty() const override
+    {
+        return std::to_string(this->wordLength);
     }
 };

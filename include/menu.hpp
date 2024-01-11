@@ -3,22 +3,69 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <stdexcept>
 #include "game.hpp"
+#include "achievements.hpp"
+
+/*template <size_t N>
+void printAchievements(Achievement (&achievements)[N])
+{
+    for (const auto &p : achievements)
+    {
+        std::cout << " ¬ " << p.getName() << ": " << p.getDescription() << '\n';
+        if (p.getAchieved())
+        {
+            std::cout << "   Unlocked" << '\n';
+        }
+        else
+        {
+            std::cout << "   Locked" << '\n';
+        }
+    }
+}*/
+
+template <typename Iterator>
+void printAchievements(Iterator begin, Iterator end)
+{
+    for (auto it = begin; it != end; ++it)
+    {
+        const auto &p = *it;
+        std::cout << " ¬ " << p->getName() << ": " << p->getDescription() << '\n';
+        if (p->getAchieved())
+        {
+            std::cout << "   Unlocked" << '\n';
+        }
+        else
+        {
+            std::cout << "   Locked" << '\n';
+        }
+    }
+}
 
 class Menu
 {
 private:
     std::string userInput;
     // sf::RenderWindow &window;
+    Menu(const std::string &input = "nope") : userInput(input) {}
 
 public:
-    Menu(const std::string &input = "nope") : userInput(input) {}
+    static Menu &getInstance()
+    {
+        static Menu instance;
+        return instance;
+    }
+
+    Menu(const Menu &) = delete;
+    void operator=(const Menu &) = delete;
+
     ~Menu(){};
 
     void draw();
     void drawPlay();
     void drawStats();
     void drawOptions();
+    void drawAchievements();
     void drawAbout();
     void drawQuit();
 };
@@ -39,20 +86,43 @@ void Menu::draw()
     std::cout << "1. Play" << '\n';
     std::cout << "2. Stats" << '\n';
     std::cout << "3. Options" << '\n';
-    std::cout << "4. About" << '\n';
-    std::cout << "5. Quit" << '\n';
+    std::cout << "4. Achievements" << '\n';
+    std::cout << "5. About" << '\n';
+    std::cout << "6. Quit" << '\n';
 
     std::cout << "'\n\n";
 
-    std::cout << "Enter your choice: ";
+    // std::cout << "Enter your choice: ";
 
-    std::cin >> this->userInput;
+    while (true)
+    {
+        try
+        {
+            std::cout << "Enter your choice: ";
+            std::cin >> this->userInput;
 
-    while (this->userInput < "1" || this->userInput > "5")
+            if (this->userInput < "1" || this->userInput > "6")
+            {
+                throw std::out_of_range("Invalid input. Please try again");
+            }
+
+            break;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+
+    // std::cin >> this->userInput;
+
+    /*while (this->userInput < "1" || this->userInput > "6")
     {
         std::cout << "Invalid input. Please try again: ";
         std::cin >> this->userInput;
-    }
+    }*/
 
     switch (stoi(this->userInput))
     {
@@ -66,9 +136,12 @@ void Menu::draw()
         this->drawOptions();
         break;
     case 4:
-        this->drawAbout();
+        this->drawAchievements();
         break;
     case 5:
+        this->drawAbout();
+        break;
+    case 6:
         this->drawQuit();
         break;
     }
@@ -85,14 +158,12 @@ void Menu::drawStats()
 /\__/ / || (_| | |_\__ \
 \____/ \__\__,_|\__|___/                    
         )" << '\n';
+    std::cout << " ¬ High score: "
+              << globals.getHighScore() << " points\n";
     std::cout << " ¬ Decrypted passwords: "
-              << "9999999" << '\n';
-    std::cout << " ¬ Max score: "
-              << "9999999" << '\n';
-    std::cout << " ¬ Total games played: "
-              << "9999999" << '\n';
-    std::cout << " ¬ Total time played: "
-              << "9999999" << '\n';
+              << globals.getDecryptedWords() << " words\n";
+    std::cout << " ¬ Time played: "
+              << globals.getTimePlayed() << " seconds\n";
 
     std::cout << "Press enter to return to main menu. ";
 
@@ -126,31 +197,52 @@ void Menu::drawOptions()
       |_|                          
       )" << '\n';
 
-    std::cout << "1. Change username    ?????" << '\n';
-    std::cout << "2. Reset stats        ?????" << '\n';
-    std::cout << "3. Return to main menu" << '\n';
+    std::cout << "1. Reset stats" << '\n';
+    std::cout << "2. Return to main menu" << '\n';
 
     std::cout << "'\n\n";
 
-    std::cout << "Enter your choice: ";
+    // std::cout << "Enter your choice: ";
 
-    std::cin >> this->userInput;
+    while (true)
+    {
+        try
+        {
+            std::cout << "Enter your choice: ";
+            std::cin >> this->userInput;
 
-    while (this->userInput < "1" || this->userInput > "3")
+            if (this->userInput < "1" || this->userInput > "2")
+            {
+                throw std::out_of_range("Invalid input. Please try again");
+            }
+
+            break;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+
+    // std::cin >> this->userInput;
+
+    /*while (this->userInput < "1" || this->userInput > "2")
     {
         std::cout << "Invalid input. Please try again: ";
         std::cin >> this->userInput;
-    }
+    }*/
 
     switch (stoi(this->userInput))
     {
     case 1:
-        // Change username
+        globals.resetStats();
+        std::cout << "Stats reseted.\n";
+        this->draw();
         break;
+
     case 2:
-        // Reset stats
-        break;
-    case 3:
         this->draw();
         break;
     }
@@ -193,4 +285,44 @@ void Menu::drawAbout()
 void Menu::drawQuit()
 {
     system("clear");
+}
+
+void Menu::drawAchievements()
+{
+    system("clear");
+    std::cout << R"(
+  ___       _     _                                     _       
+ / _ \     | |   (_)                                   | |      
+/ /_\ \ ___| |__  _  _____   _____ _ __ ___   ___ _ __ | |_ ___ 
+|  _  |/ __| '_ \| |/ _ \ \ / / _ \ '_ ` _ \ / _ \ '_ \| __/ __|
+| | | | (__| | | | |  __/\ V /  __/ | | | | |  __/ | | | |_\__ \
+\_| |_/\___|_| |_|_|\___| \_/ \___|_| |_| |_|\___|_| |_|\__|___/                   
+        )" << '\n';
+
+    std::vector<std::unique_ptr<Achievement>> achievements;
+
+    achievements.push_back(std::make_unique<Achievement>("First time", "Play the game for the first time"));
+    achievements.push_back(std::make_unique<RareAchievement>("Ten", "Score at least 10 points in a game"));
+    achievements.push_back(std::make_unique<EpicAchievement>("Enjoy the game", "Play for more than one minute"));
+
+    if (globals.getTimePlayed() > 0)
+    {
+        achievements[0]->setAchieved();
+    }
+    if (globals.getHighScore() >= 10)
+    {
+        achievements[1]->setAchieved();
+    }
+    if (globals.getTimePlayed() >= 60)
+    {
+        achievements[2]->setAchieved();
+    }
+
+    // printAchievements(achievements);
+    printAchievements(achievements.begin(), achievements.end());
+
+    std::cin.ignore();
+    getline(std::cin, this->userInput);
+
+    this->draw();
 }

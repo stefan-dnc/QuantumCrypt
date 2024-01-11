@@ -1,5 +1,4 @@
 // #include "../include/globals.hpp"
-#include "../include/player.hpp"
 #include "../include/menu.hpp"
 #include "../include/timer.hpp"
 #include "../include/game.hpp"
@@ -8,23 +7,29 @@
 #include <thread>
 #include <stdlib.h>
 
-Player player;
 Globals globals;
 
 int main()
 {
-    // player.showScore();
 
-    constexpr int framesPerSecond = 60;
-    constexpr std::chrono::duration<double> frameDuration(1.0 / framesPerSecond);
-    // int i = 1;
+    // constexpr int framesPerSecond = 60;
+    // constexpr std::chrono::duration<double> frameDuration(1.0 / framesPerSecond);
+    //  int i = 1;
 
     system("clear");
 
     // mainmenu.draw();
 
-    Menu *mainmenu = new Menu();
-    mainmenu->draw();
+    // Menu *mainmenu = new Menu();
+    try
+    {
+        Menu &mainmenu = Menu::getInstance();
+        mainmenu.draw();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
 
     /*while (true)
     {
