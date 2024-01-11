@@ -48,6 +48,21 @@ public:
     {
         this->isAchieved = true;
     }
+
+    friend std::ostream &operator<<(std::ostream &os, const Achievement &obj)
+    {
+        os << " ¬ " << obj.getName() << '\n'
+           << obj.getDescription() << '\n';
+        if (obj.getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+        return os;
+    }
 };
 
 class RareAchievement : public Achievement
@@ -63,6 +78,21 @@ public:
     }
 
     ~RareAchievement() {}
+
+    friend std::ostream &operator<<(std::ostream &os, const RareAchievement &obj)
+    {
+        os << " ¬ " << obj.getName() << '\n'
+           << obj.getDescription() << '\n';
+        if (obj.getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+        return os;
+    }
 };
 
 class EpicAchievement : public Achievement
@@ -78,4 +108,19 @@ public:
     }
 
     ~EpicAchievement() {}
+
+    friend std::ostream &operator<<(std::ostream &os, const EpicAchievement &obj)
+    {
+        os << " ¬ " << obj.getName() << '\n'
+           << obj.getDescription() << '\n';
+        if (obj.getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+        return os;
+    }
 };

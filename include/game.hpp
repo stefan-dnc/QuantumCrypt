@@ -14,7 +14,7 @@ class Game
 {
 private:
     int gameScore = 0;
-    const int defaultTime = 40;
+    const int defaultTime = 35;
     std::string word;
     std::string cryptedWord;
     std::string decryptedWord;

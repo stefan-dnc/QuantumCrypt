@@ -30,15 +30,16 @@ void printAchievements(Iterator begin, Iterator end)
     for (auto it = begin; it != end; ++it)
     {
         const auto &p = *it;
-        std::cout << " ¬ " << p->getName() << ": " << p->getDescription() << '\n';
-        if (p->getAchieved())
+        std::cout << *p << '\n';
+        //  std::cout << " ¬ " << p->getName() << ": " << p->getDescription() << '\n';
+        /*if (p->getAchieved())
         {
             std::cout << "   Unlocked" << '\n';
         }
         else
         {
             std::cout << "   Locked" << '\n';
-        }
+        }*/
     }
 }
 
