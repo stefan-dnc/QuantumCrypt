@@ -9,13 +9,16 @@
 #include "globals.hpp"
 #include "player.hpp"
 #include "timer.hpp"
+#include "wordcrypt.hpp"
 
 class Game
 {
 private:
     int gameScore = 0;
-    int defaultTime = 5;
+    int defaultTime = 40;
     std::string word;
+    std::string cryptedWord;
+    std::string decryptedWord;
     char currentChar;
     char lastChar;
     std::mutex mtx;
@@ -86,7 +89,8 @@ private:
 
                 mvprintw(1, 0, "Time left: %d", static_cast<int>(defaultTime - timer.elapsed()));
                 mvprintw(2, 0, "Score: %d", gameScore);
-                mvprintw(3, 0, "Word: %s", word.c_str());
+                mvprintw(3, 0, "Word: %s", decryptedWord.c_str());
+                mvprintw(4, 0, "Word: %s", word.c_str());
 
                 refresh();
             }
@@ -97,6 +101,10 @@ private:
 
     void inputThread()
     {
+        WordCrypt &cryptInstance = WordCrypt::getInstance(1);
+        cryptedWord = cryptInstance.getCryptedWord();
+        decryptedWord = cryptInstance.getWord();
+
         while (timer.elapsed() < defaultTime && !isFinished)
         {
             {
@@ -109,13 +117,25 @@ private:
                 }
                 else if (currentChar == '\n')
                 {
-                    if (word == "exit")
+                    if (word == cryptedWord)
                     {
                         // gameScore = 1;
-                        isFinished = true;
+
+                        /*isFinished = true;
                         clear();
                         system("clear");
-                        endGame();
+                        endGame();*/
+                        increaseScore(cryptedWord.size());
+                        cryptInstance.regenerateWord(word.size() + 1);
+                        word = "";
+
+                        // cryptInstance.destroyInstance();
+                        // WordCrypt &cryptInstance = WordCrypt::getInstance(8);
+
+                        // cryptInstance.regenerateWord(cryptedWord.size());
+
+                        cryptedWord = cryptInstance.getCryptedWord();
+                        decryptedWord = cryptInstance.getWord();
                     }
                     else
                     {
@@ -242,9 +262,9 @@ public:
         return gameScore;
     };
 
-    void increaseScore()
+    void increaseScore(int score)
     {
-        gameScore++;
+        gameScore += score;
     };
 
     void start(int time)
@@ -266,8 +286,13 @@ public:
         //  mvprintw(1, 0, "Score: \n");
         //  mvprintw(2, 0, "Word: ");
 
+        /*WordCrypt &cryptInstance = WordCrypt::getInstance(1);
+        cryptedWord = cryptInstance.getCryptedWord();
+        decryptedWord = cryptInstance.getWord();*/
+
         std::thread output(&Game::outputThread, this);
         std::thread input(&Game::inputThread, this);
+        // std::thread input(&Game::inputThread, this, std::ref(cryptInstance));
 
         output.join();
         input.join();

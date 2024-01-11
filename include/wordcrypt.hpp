@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <random>
 
@@ -51,14 +53,35 @@ public:
     {
         return this->wordLength;
     }
+
+    void setWordLength(int wordLength)
+    {
+        this->wordLength = wordLength;
+        this->word = "";
+    }
 };
 class WordCrypt : public WordGen
 {
 private:
     std::string cryptedWord;
+    WordCrypt() : WordGen() // SINGLETON
+    {
+        cryptedWord = this->word;
+        this->crypt();
+    }
+
+    WordCrypt(int wordLength) : WordGen(wordLength)
+    {
+        cryptedWord = this->word;
+        this->crypt();
+    }
+    ~WordCrypt(){};
+
+    WordCrypt(const WordCrypt &) = delete;
+    WordCrypt &operator=(const WordCrypt &) = delete;
 
 public:
-    WordCrypt() : WordGen()
+    /*WordCrypt() : WordGen()
     {
         cryptedWord = this->word;
         this->crypt();
@@ -67,6 +90,23 @@ public:
     {
         cryptedWord = this->word;
         this->crypt();
+    }*/
+
+    static WordCrypt &getInstance()
+    {
+        static WordCrypt instance;
+        return instance;
+    }
+
+    static WordCrypt &getInstance(int wordLength)
+    {
+        static WordCrypt instance(wordLength);
+        return instance;
+    }
+
+    void destroyInstance()
+    {
+        this->~WordCrypt();
     }
 
     void crypt()
@@ -95,21 +135,12 @@ public:
     {
         return this->cryptedWord;
     }
+
+    void regenerateWord(int wordLength)
+    {
+        this->setWordLength(wordLength);
+        this->generate();
+        this->cryptedWord = this->word;
+        this->crypt();
+    }
 };
-
-int main()
-{
-    WordGen cuvant(5), cuvant2(12), cuvant3(1);
-    std::cout << cuvant.getWord() << std::endl;
-    std::cout << cuvant2.getWord() << std::endl;
-    std::cout << cuvant3.getWord() << std::endl;
-
-    std::cout << std::endl
-              << std::endl
-              << std::endl;
-
-    WordCrypt cuvantCriptat(5), cuvantCriptat2(12), cuvantCriptat3(1);
-    std::cout << cuvantCriptat.getCryptedWord() << " si " << cuvantCriptat.getWord() << std::endl;
-    std::cout << cuvantCriptat2.getCryptedWord() << " si " << cuvantCriptat2.getWord() << std::endl;
-    std::cout << cuvantCriptat3.getCryptedWord() << " si " << cuvantCriptat3.getWord() << std::endl;
-}
