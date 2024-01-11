@@ -57,7 +57,7 @@ private:
 
         std::string *getStarted = new std::string;
 
-        std::cin.ignore();
+        // std::cin.ignore();
         std::getline(std::cin, *getStarted);
 
         delete getStarted;

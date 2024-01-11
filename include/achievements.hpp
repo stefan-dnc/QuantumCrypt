@@ -81,7 +81,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const RareAchievement &obj)
     {
-        os << " ¬ " << obj.getName() << '\n'
+        os << " ¬ " << obj.getName() << " [RARE]" << '\n'
            << obj.getDescription() << '\n';
         if (obj.getAchieved())
         {
@@ -111,7 +111,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const EpicAchievement &obj)
     {
-        os << " ¬ " << obj.getName() << '\n'
+        os << " ¬ " << obj.getName() << " [EPIC]" << '\n'
            << obj.getDescription() << '\n';
         if (obj.getAchieved())
         {
