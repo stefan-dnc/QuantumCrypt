@@ -14,7 +14,7 @@ class Game
 {
 private:
     int gameScore = 0;
-    int defaultTime = 10;
+    const int defaultTime = 40;
     std::string word;
     std::string cryptedWord;
     std::string decryptedWord;
@@ -222,12 +222,14 @@ public:
         if (globals.getHighScore() == 0)
         {
             std::cout << R"(
-                    Game instructions that will get replaced.
-                    Game instructions that will get replaced.
-                    Game instructions that will get replaced.
-                    Game instructions that will get replaced.
-                    Game instructions that will get replaced.
-                    Game instructions that will get replaced.
+This game is based on Caesar's crypting algorithm.
+
+For each letter in a word, the letter is replaced with the letter that is
+one position after it.
+
+For example: abc -> bcd
+             def -> efg
+For 'z' the next letter is 'a'.
                     )" << '\n';
 
             std::cout << "Press enter to start ";
@@ -254,12 +256,12 @@ public:
         // mainmenu->draw();
     };
 
-    bool checkIfFinished()
+    bool checkIfFinished() const
     {
         return isFinished;
     };
 
-    int getScore()
+    int getScore() const
     {
         return gameScore;
     };

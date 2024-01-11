@@ -29,17 +29,17 @@ public:
         this->isAchieved = isAchieved;
     }
 
-    bool getAchieved()
+    bool getAchieved() const
     {
         return this->isAchieved;
     }
 
-    std::string getName()
+    std::string getName() const
     {
         return this->name;
     }
 
-    std::string getDescription()
+    std::string getDescription() const
     {
         return this->description;
     }

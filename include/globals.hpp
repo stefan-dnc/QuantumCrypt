@@ -18,7 +18,7 @@ public:
         highScore = score;
     };
 
-    int getHighScore()
+    int getHighScore() const
     {
         return highScore;
     };
@@ -28,12 +28,12 @@ public:
         decryptedWords++;
     }
 
-    int getDecryptedWords()
+    int getDecryptedWords() const
     {
         return decryptedWords;
     };
 
-    int getTimePlayed()
+    int getTimePlayed() const
     {
         return timePlayed;
     };

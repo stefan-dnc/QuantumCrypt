@@ -70,12 +70,12 @@ public:
         }
     }
 
-    std::string getWord()
+    std::string getWord() const
     {
         return this->word;
     }
 
-    int getWordLength()
+    int getWordLength() const
     {
         return this->wordLength;
     }
