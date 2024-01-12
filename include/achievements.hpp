@@ -49,7 +49,7 @@ public:
         this->isAchieved = true;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const Achievement &obj)
+    /*friend std::ostream &operator<<(std::ostream &os, const Achievement &obj)
     {
         os << " ¬ " << obj.getName() << '\n'
            << obj.getDescription() << '\n';
@@ -61,6 +61,26 @@ public:
         {
             os << "--- Locked" << '\n';
         }
+        return os;
+    }*/
+
+    virtual void print(std::ostream &os) const
+    {
+        os << " ¬ " << getName() << '\n'
+           << getDescription() << '\n';
+        if (getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const Achievement &obj)
+    {
+        obj.print(os);
         return os;
     }
 };
@@ -79,7 +99,7 @@ public:
 
     ~RareAchievement() {}
 
-    friend std::ostream &operator<<(std::ostream &os, const RareAchievement &obj)
+    /*friend std::ostream &operator<<(std::ostream &os, const RareAchievement &obj)
     {
         os << " ¬ " << obj.getName() << " [RARE]" << '\n'
            << obj.getDescription() << '\n';
@@ -91,6 +111,26 @@ public:
         {
             os << "--- Locked" << '\n';
         }
+        return os;
+    }*/
+
+    void print(std::ostream &os) const override
+    {
+        os << " ¬ " << getName() << " [RARE]" << '\n'
+           << getDescription() << '\n';
+        if (getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const RareAchievement &obj)
+    {
+        obj.print(os);
         return os;
     }
 };
@@ -109,7 +149,7 @@ public:
 
     ~EpicAchievement() {}
 
-    friend std::ostream &operator<<(std::ostream &os, const EpicAchievement &obj)
+    /*friend std::ostream &operator<<(std::ostream &os, const EpicAchievement &obj)
     {
         os << " ¬ " << obj.getName() << " [EPIC]" << '\n'
            << obj.getDescription() << '\n';
@@ -121,6 +161,26 @@ public:
         {
             os << "--- Locked" << '\n';
         }
+        return os;
+    }*/
+
+    void print(std::ostream &os) const override
+    {
+        os << " ¬ " << getName() << " [EPIC]" << '\n'
+           << getDescription() << '\n';
+        if (getAchieved())
+        {
+            os << "--- Unlocked" << '\n';
+        }
+        else
+        {
+            os << "--- Locked" << '\n';
+        }
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const EpicAchievement &obj)
+    {
+        obj.print(os);
         return os;
     }
 };

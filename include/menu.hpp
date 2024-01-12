@@ -269,9 +269,9 @@ void Menu::drawAbout()
     std::cout << " ¬ License: "
               << "Open source" << '\n';
     std::cout << " ¬ Description: "
-              << "A simple game of decrypting passwords." << '\n';
+              << "A simple game of word crypting." << '\n';
     std::cout << " ¬ Dependencies: "
-              << "C++ 2b" << '\n';
+              << "C++ 23 and ncurses" << '\n';
 
     std::cout << "\n\n";
 
